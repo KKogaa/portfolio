@@ -2,17 +2,38 @@ export const translations = {
   en: {
     nav: { home: 'Home', experience: 'Experience', education: 'Education', skills: 'Skills', contact: 'Contact' },
     hero: {
-      subtitle: 'Software Developer',
+      subtitle: 'Backend Java Software Engineer',
       tagline: 'Computer Engineering graduate. Experience designing and developing efficient, scalable systems with cloud technologies.',
       primaryBtn: 'Experience',
       secondaryBtn: 'Contact Me',
     },
     experience: {
       title: 'Experience',
+      bcp: {
+        company: 'Banco de Crédito BCP',
+        role: 'Backend Java Software Engineer',
+        period: '01/2025 – Present',
+        bullets: [
+          'Backend development of enterprise financial systems using Java and Spring Boot.',
+          'Design and implementation of scalable microservices architecture.',
+          'API integrations with internal and external services.',
+          'Collaboration with cross-functional teams in an Agile environment.',
+        ],
+      },
+      ntt: {
+        company: 'NTT DATA Europe & Latam',
+        role: 'Engineer',
+        period: '06/2024 – 01/2025',
+        bullets: [
+          'Software engineering for enterprise clients.',
+          'Development and maintenance of backend services.',
+          'Implementation of best practices and clean architecture.',
+        ],
+      },
       bitel: {
-        company: 'BITEL',
+        company: 'Bitel Perú',
         role: 'Software Developer',
-        period: '08/2023 – Present',
+        period: '09/2023 – 06/2024',
         bullets: [
           'Design and implementation of receipt generation and delivery systems for Bitel Fiber customers.',
           'Implementation of services to report invoices and receipts to SUNAT.',
@@ -25,7 +46,7 @@ export const translations = {
       },
       tiendada: {
         company: 'Tiendada',
-        role: 'Software Developer',
+        role: 'Back-end Developer',
         period: '04/2022 – 12/2022',
         bullets: [
           'Promotion configuration and calculation module.',
@@ -38,7 +59,7 @@ export const translations = {
       },
       pucp: {
         company: 'Pontificia Universidad Católica del Perú',
-        role: 'Software Developer',
+        role: 'Software Developer (Apprenticeship)',
         period: '08/2021 – 12/2021',
         bullets: ['Implementation of a student support platform.'],
       },
@@ -53,28 +74,45 @@ export const translations = {
       },
       certsTitle: 'Certifications & Awards',
     },
-    skills: {
-      title: 'Skills & Technologies',
-    },
-    contact: {
-      title: 'Get In Touch',
-    },
+    skills: { title: 'Skills & Technologies' },
+    contact: { title: 'Get In Touch' },
     footer: 'Built with React + TypeScript + Tailwind.',
   },
   es: {
     nav: { home: 'Inicio', experience: 'Experiencia', education: 'Educación', skills: 'Habilidades', contact: 'Contacto' },
     hero: {
-      subtitle: 'Desarrollador de Software',
+      subtitle: 'Backend Java Software Engineer',
       tagline: 'Bachiller en Ingeniería Informática. Experiencia diseñando y desarrollando sistemas eficientes y escalables con tecnologías cloud.',
       primaryBtn: 'Experiencia',
       secondaryBtn: 'Contáctame',
     },
     experience: {
       title: 'Experiencia',
+      bcp: {
+        company: 'Banco de Crédito BCP',
+        role: 'Backend Java Software Engineer',
+        period: '01/2025 – Presente',
+        bullets: [
+          'Desarrollo backend de sistemas financieros empresariales con Java y Spring Boot.',
+          'Diseño e implementación de arquitectura de microservicios escalable.',
+          'Integraciones de API con servicios internos y externos.',
+          'Colaboración con equipos multifuncionales en un entorno Agile.',
+        ],
+      },
+      ntt: {
+        company: 'NTT DATA Europe & Latam',
+        role: 'Ingeniero',
+        period: '06/2024 – 01/2025',
+        bullets: [
+          'Ingeniería de software para clientes empresariales.',
+          'Desarrollo y mantenimiento de servicios backend.',
+          'Implementación de buenas prácticas y arquitectura limpia.',
+        ],
+      },
       bitel: {
-        company: 'BITEL',
+        company: 'Bitel Perú',
         role: 'Desarrollador de Software',
-        period: '08/2023 – Presente',
+        period: '09/2023 – 06/2024',
         bullets: [
           'Diseño e implementación de sistemas para generación y envío de recibos a clientes de Bitel Fibra.',
           'Implementación de servicios para reportar boletas y facturas a SUNAT.',
@@ -87,7 +125,7 @@ export const translations = {
       },
       tiendada: {
         company: 'Tiendada',
-        role: 'Desarrollador de Software',
+        role: 'Desarrollador Back-end',
         period: '04/2022 – 12/2022',
         bullets: [
           'Módulo de configuración y cálculo de promociones.',
@@ -100,7 +138,7 @@ export const translations = {
       },
       pucp: {
         company: 'Pontificia Universidad Católica del Perú',
-        role: 'Desarrollador de Software',
+        role: 'Desarrollador de Software (Practicante)',
         period: '08/2021 – 12/2021',
         bullets: ['Implementación de plataforma de soporte para estudiantes.'],
       },
@@ -115,12 +153,8 @@ export const translations = {
       },
       certsTitle: 'Certificados y Logros',
     },
-    skills: {
-      title: 'Habilidades y Tecnologías',
-    },
-    contact: {
-      title: 'Contacto',
-    },
+    skills: { title: 'Habilidades y Tecnologías' },
+    contact: { title: 'Contacto' },
     footer: 'Construido con React + TypeScript + Tailwind.',
   },
 } as const

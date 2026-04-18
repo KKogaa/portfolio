@@ -21,7 +21,7 @@ function App() {
     setMenuOpen(false)
   }
   const t = translations[lang]
-  const jobs = [t.experience.bitel, t.experience.tiendada, t.experience.pucp]
+  const jobs = [t.experience.bcp, t.experience.ntt, t.experience.bitel, t.experience.tiendada, t.experience.pucp]
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
