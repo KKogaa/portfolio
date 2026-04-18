@@ -19,6 +19,7 @@ export const translations = {
           'API integrations with internal and external services.',
           'Collaboration with cross-functional teams in an Agile environment.',
         ],
+        tech: ['Java', 'Spring Boot', 'Azure', 'DAPR', 'Redis', 'Jenkins'],
       },
       ntt: {
         company: 'NTT DATA Europe & Latam',
@@ -27,9 +28,12 @@ export const translations = {
         bullets: [
           'Assigned to BCP — CIX Centro de Innovacxión (Innovation Center).',
           'Worked on Lab SendSei: cross-border money transfer platform from Peru to US, Spain, Colombia and Chile.',
-          'Backend development of international remittance services.',
-          'Implementation of best practices and clean architecture.',
+          'Microservices with hexagonal architecture for international remittance services.',
+          'Integration with Kushki payment gateway and Remitee for cross-border transfers.',
+          'Backend development using Azure Functions (TypeScript), Azure Redis Cache, and Airtable.',
+          'Authentication with Azure B2C.',
         ],
+        tech: ['Azure', 'Azure B2C', 'Azure Functions', 'TypeScript', 'Redis', 'Airtable', 'Kushki', 'Remitee'],
       },
       bitel: {
         company: 'Bitel Perú',
@@ -44,6 +48,7 @@ export const translations = {
           'APIs for transaction report generation.',
           'CI/CD pipelines with Jenkins.',
         ],
+        tech: ['Java', 'Struts', 'Oracle', 'Jenkins', 'CI/CD'],
       },
       tiendada: {
         company: 'Tiendada',
@@ -57,12 +62,14 @@ export const translations = {
           'SSL certificate generation for custom store domains.',
           'CI/CD pipelines in Bitbucket Pipeline.',
         ],
+        tech: ['Java', 'Spring Boot', 'PostgreSQL', 'Izipay', 'Bitbucket Pipelines'],
       },
       pucp: {
         company: 'Pontificia Universidad Católica del Perú',
         role: 'Software Developer (Apprenticeship)',
         period: '08/2021 – 12/2021',
         bullets: ['Implementation of a student support platform.'],
+        tech: ['Java', 'Spring Boot'],
       },
     },
     education: {
@@ -99,6 +106,7 @@ export const translations = {
           'Integraciones de API con servicios internos y externos.',
           'Colaboración con equipos multifuncionales en un entorno Agile.',
         ],
+        tech: ['Java', 'Spring Boot', 'Azure', 'DAPR', 'Redis', 'Jenkins'],
       },
       ntt: {
         company: 'NTT DATA Europe & Latam',
@@ -107,9 +115,12 @@ export const translations = {
         bullets: [
           'Asignado a BCP — CIX Centro de Innovacxión (Centro de Innovación).',
           'Trabajo en Lab SendSei: plataforma de transferencia de dinero transfronteriza de Perú a EE.UU., España, Colombia y Chile.',
-          'Desarrollo backend de servicios de giros internacionales.',
-          'Implementación de buenas prácticas y arquitectura limpia.',
+          'Microservicios con arquitectura hexagonal para servicios de giros internacionales.',
+          'Integración con pasarela de pagos Kushki y Remitee para transferencias transfronterizas.',
+          'Desarrollo backend con Azure Functions (TypeScript), Azure Redis Cache y Airtable.',
+          'Autenticación con Azure B2C.',
         ],
+        tech: ['Azure', 'Azure B2C', 'Azure Functions', 'TypeScript', 'Redis', 'Airtable', 'Kushki', 'Remitee'],
       },
       bitel: {
         company: 'Bitel Perú',
@@ -124,6 +135,7 @@ export const translations = {
           'APIs para generación de reportes de transacciones.',
           'Pipelines de CI/CD con Jenkins.',
         ],
+        tech: ['Java', 'Struts', 'Oracle', 'Jenkins', 'CI/CD'],
       },
       tiendada: {
         company: 'Tiendada',
@@ -137,12 +149,14 @@ export const translations = {
           'Generación de certificados SSL para dominios personalizables.',
           'Pipelines de CI/CD en Bitbucket Pipeline.',
         ],
+        tech: ['Java', 'Spring Boot', 'PostgreSQL', 'Izipay', 'Bitbucket Pipelines'],
       },
       pucp: {
         company: 'Pontificia Universidad Católica del Perú',
         role: 'Desarrollador de Software (Practicante)',
         period: '08/2021 – 12/2021',
         bullets: ['Implementación de plataforma de soporte para estudiantes.'],
+        tech: ['Java', 'Spring Boot'],
       },
     },
     education: {

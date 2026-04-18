@@ -144,6 +144,15 @@ function App() {
                     </li>
                   ))}
                 </ul>
+                {'tech' in job && job.tech && (
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {job.tech.map((tech: string) => (
+                      <span key={tech} className="px-2 py-0.5 rounded text-xs text-blue-400 bg-blue-500/10 border border-blue-500/20">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
