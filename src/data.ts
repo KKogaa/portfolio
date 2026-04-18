@@ -15,7 +15,7 @@ export const translations = {
         period: '01/2025 – Present',
         bullets: [
           'Lab Tesora: conciliation platform for automated matching of income with receipts.',
-          'Continued development of Lab SendSei cross-border transfer platform (transitioned from NTT DATA).',
+          'Lab SendSei: cross-border money transfer platform.',
           'Backend microservices with Quarkus (Java) and Python.',
           'Cloud infrastructure on Azure: Container Apps, Functions, Redis, Service Bus, KeyVault and B2C.',
           'Design and implementation of scalable microservices architecture with DAPR.',
@@ -104,7 +104,7 @@ export const translations = {
         period: '01/2025 – Presente',
         bullets: [
           'Lab Tesora: plataforma de conciliación para emparejamiento automático de ingresos con recibos.',
-          'Continuación del desarrollo del Lab SendSei plataforma de transferencias transfronterizas (transición desde NTT DATA).',
+          'Lab SendSei: plataforma de transferencia de dinero transfronteriza.',
           'Microservicios backend con Quarkus (Java) y Python.',
           'Infraestructura cloud en Azure: Container Apps, Functions, Redis, Service Bus, KeyVault y B2C.',
           'Diseño e implementación de arquitectura de microservicios escalable con DAPR.',
