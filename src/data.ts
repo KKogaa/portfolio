@@ -25,8 +25,9 @@ export const translations = {
         role: 'Engineer',
         period: '06/2024 – 01/2025',
         bullets: [
-          'Software engineering for enterprise clients.',
-          'Development and maintenance of backend services.',
+          'Assigned to BCP — CIX Centro de Innovacxión (Innovation Center).',
+          'Worked on Lab SendSei: cross-border money transfer platform from Peru to US, Spain, Colombia and Chile.',
+          'Backend development of international remittance services.',
           'Implementation of best practices and clean architecture.',
         ],
       },
@@ -104,8 +105,9 @@ export const translations = {
         role: 'Ingeniero',
         period: '06/2024 – 01/2025',
         bullets: [
-          'Ingeniería de software para clientes empresariales.',
-          'Desarrollo y mantenimiento de servicios backend.',
+          'Asignado a BCP — CIX Centro de Innovacxión (Centro de Innovación).',
+          'Trabajo en Lab SendSei: plataforma de transferencia de dinero transfronteriza de Perú a EE.UU., España, Colombia y Chile.',
+          'Desarrollo backend de servicios de giros internacionales.',
           'Implementación de buenas prácticas y arquitectura limpia.',
         ],
       },
