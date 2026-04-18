@@ -191,7 +191,8 @@ function App() {
 
       {/* Footer */}
       <footer className="text-center py-8 text-zinc-600 text-sm border-t border-white/5">
-        © {new Date().getFullYear()} Andrés Koga. {t.footer}
+        <p>© {new Date().getFullYear()} Andrés Koga. {t.footer}</p>
+        <p className="mt-1">v0.3.0</p>
       </footer>
     </div>
   )
