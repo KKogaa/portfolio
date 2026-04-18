@@ -14,12 +14,14 @@ export const translations = {
         role: 'Backend Java Software Engineer',
         period: '01/2025 – Present',
         bullets: [
-          'Backend development of enterprise financial systems using Java and Spring Boot.',
+          'Continued work on Lab SendSei: cross-border money transfer platform.',
+          'Lab Tesora: conciliation platform that matches income with receipts.',
+          'Backend development with Quarkus (Java) and Python microservices.',
+          'Azure infrastructure: Azure B2C, Azure Functions, Azure Redis, Azure Container Apps, KeyVault, Azure Service Bus.',
           'Design and implementation of scalable microservices architecture.',
-          'API integrations with internal and external services.',
           'Collaboration with cross-functional teams in an Agile environment.',
         ],
-        tech: ['Java', 'Spring Boot', 'Azure', 'DAPR', 'Redis', 'Jenkins'],
+        tech: ['Java', 'Quarkus', 'Python', 'Azure', 'Azure B2C', 'Azure Functions', 'Azure Container Apps', 'Redis', 'KeyVault', 'Azure Service Bus', 'DAPR'],
       },
       ntt: {
         company: 'NTT DATA Europe & Latam',
@@ -101,12 +103,14 @@ export const translations = {
         role: 'Backend Java Software Engineer',
         period: '01/2025 – Presente',
         bullets: [
-          'Desarrollo backend de sistemas financieros empresariales con Java y Spring Boot.',
+          'Continuación del Lab SendSei: plataforma de transferencia de dinero transfronteriza.',
+          'Lab Tesora: plataforma de conciliación que compara ingresos con recibos.',
+          'Desarrollo backend con microservicios en Quarkus (Java) y Python.',
+          'Infraestructura Azure: Azure B2C, Azure Functions, Azure Redis, Azure Container Apps, KeyVault, Azure Service Bus.',
           'Diseño e implementación de arquitectura de microservicios escalable.',
-          'Integraciones de API con servicios internos y externos.',
           'Colaboración con equipos multifuncionales en un entorno Agile.',
         ],
-        tech: ['Java', 'Spring Boot', 'Azure', 'DAPR', 'Redis', 'Jenkins'],
+        tech: ['Java', 'Quarkus', 'Python', 'Azure', 'Azure B2C', 'Azure Functions', 'Azure Container Apps', 'Redis', 'KeyVault', 'Azure Service Bus', 'DAPR'],
       },
       ntt: {
         company: 'NTT DATA Europe & Latam',
@@ -179,7 +183,7 @@ export type Lang = keyof typeof translations
 export type Section = 'home' | 'experience' | 'education' | 'skills' | 'contact'
 
 export const skills: { category: { en: string; es: string }; items: string[] }[] = [
-  { category: { en: 'Backend', es: 'Backend' }, items: ['Java', 'Spring Boot', 'Go', 'Flask', 'Fastify', 'Echo', 'Struts'] },
+  { category: { en: 'Backend', es: 'Backend' }, items: ['Java', 'Quarkus', 'Spring Boot', 'Go', 'Python', 'Flask', 'Fastify', 'Echo', 'Struts'] },
   { category: { en: 'Frontend', es: 'Frontend' }, items: ['JavaScript', 'React', 'TypeScript'] },
   { category: { en: 'Cloud & Infra', es: 'Cloud e Infra' }, items: ['AWS', 'Azure', 'Docker', 'DAPR', 'Kubernetes'] },
   { category: { en: 'Databases', es: 'Bases de Datos' }, items: ['PostgreSQL', 'Oracle', 'SQL Server', 'Redis'] },
