@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { translations, type Lang, type Section, skills, certificates, navItems } from './data'
+import { downloadCv } from './cv-pdf'
 
 function getBrowserLang(): Lang {
   const lang = navigator.language.slice(0, 2).toLowerCase()
@@ -10,6 +11,7 @@ function App() {
   const [active, setActive] = useState<Section>('home')
   const [lang, setLang] = useState<Lang>(getBrowserLang)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [downloading, setDownloading] = useState<Lang | null>(null)
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -21,6 +23,16 @@ function App() {
     setMenuOpen(false)
   }
   const t = translations[lang]
+
+  const handleDownload = async (target: Lang) => {
+    setDownloading(target)
+    try {
+      await downloadCv(target)
+    } finally {
+      setDownloading(null)
+    }
+  }
+
   const jobs = [t.experience.bcp, t.experience.ntt, t.experience.bitel, t.experience.tiendada, t.experience.pucp]
 
   return (
@@ -177,10 +189,10 @@ function App() {
           <div className="flex flex-wrap gap-2 sm:gap-3">
             {certificates.map((c) => (
               <span
-                key={c}
+                key={c.en}
                 className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm text-zinc-300 bg-white/5 border border-white/10"
               >
-                {c}
+                {c[lang]}
               </span>
             ))}
           </div>
@@ -222,6 +234,27 @@ function App() {
           <h2 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
             {t.contact.title}
           </h2>
+
+          <div className="mb-6 sm:mb-8 p-5 sm:p-6 rounded-xl border border-white/10 bg-white/[0.02]">
+            <div className="flex items-baseline justify-between gap-3 mb-3 sm:mb-4">
+              <h3 className="font-medium text-sm sm:text-base">{t.cv.title}</h3>
+              <small className="text-zinc-500 text-xs">{t.cv.note}</small>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              {(['en', 'es'] as const).map((target) => (
+                <button
+                  key={target}
+                  onClick={() => handleDownload(target)}
+                  disabled={downloading !== null}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-white/10 bg-white/5 hover:border-blue-500/50 hover:bg-white/10 transition text-sm disabled:opacity-50 disabled:cursor-wait"
+                >
+                  <span aria-hidden>{downloading === target ? '⏳' : '📄'}</span>
+                  <span>{t.cv[target]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <a
               href="https://t.me/Kkogaa"
