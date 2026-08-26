@@ -1,9 +1,9 @@
 import { translations, skills, certificates, languages, summary, headline, profile, type Lang } from './data'
 
-/** A4, 0.75in margins — Harvard resume conventions. */
+/** A4, 0.67in margins — Harvard resume conventions. */
 const PAGE_W = 595.28
 const PAGE_H = 841.89
-const MARGIN = 54
+const MARGIN = 48
 const CONTENT_W = PAGE_W - MARGIN * 2
 
 /** Leading candidates, loosest first: the resume is typeset at the first one that fits a single page. */
@@ -53,10 +53,10 @@ function render(doc: Doc, lang: Lang, lead: number) {
   const heading = (label: string) => {
     room(lead * 3)
     y += lead * 0.55
-    doc.setFont('times', 'bold').setFontSize(body + 1)
+    doc.setFont('times', 'bold').setFontSize(body + 1.5)
     doc.text(label, MARGIN, y)
     y += 3.5
-    doc.setLineWidth(0.7).line(MARGIN, y, PAGE_W - MARGIN, y)
+    doc.setLineWidth(0.4).line(MARGIN, y, PAGE_W - MARGIN, y)
     y += lead
     doc.setFont('times', 'normal').setFontSize(body)
   }
