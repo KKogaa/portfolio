@@ -1,8 +1,8 @@
-import { translations, skills, certificates, profile, type Lang } from './data'
+import { translations, skills, certificates, languages, summary, profile, type Lang } from './data'
 
-/** US Letter, 0.75in margins — Harvard resume conventions. */
-const PAGE_W = 612
-const PAGE_H = 792
+/** A4, 0.75in margins — Harvard resume conventions. */
+const PAGE_W = 595.28
+const PAGE_H = 841.89
 const MARGIN = 54
 const CONTENT_W = PAGE_W - MARGIN * 2
 
@@ -13,7 +13,7 @@ type Doc = Awaited<ReturnType<typeof newDoc>>
 
 async function newDoc() {
   const { jsPDF } = await import('jspdf')
-  return new jsPDF({ unit: 'pt', format: 'letter' })
+  return new jsPDF({ unit: 'pt', format: 'a4' })
 }
 
 function render(doc: Doc, lang: Lang, lead: number) {
@@ -66,21 +66,18 @@ function render(doc: Doc, lang: Lang, lead: number) {
   doc.text(profile.name, PAGE_W / 2, y, { align: 'center' })
   y += 15
   doc.setFont('times', 'normal').setFontSize(body)
-  const contact = [profile.location[lang], profile.github]
+  const contact = [profile.location[lang], profile.email, profile.linkedin, profile.github].filter(Boolean)
   doc.text(contact.join('  •  '), PAGE_W / 2, y, { align: 'center' })
   y += 6
 
-  // ---- Education ----
-  heading(r.education)
-  const ed = t.education.pucp
-  row(ed.name, ed.period, 'bold')
-  row(ed.degree, profile.location[lang], 'italic')
-  doc.setFont('times', 'normal').setFontSize(body)
-  paragraph(`${r.relevant}: ${ed.desc}`)
+  // ---- Summary ----
+  heading(r.summary)
+  paragraph(summary[lang])
 
   // ---- Experience ----
   heading(r.experience)
-  const jobs = [t.experience.bcp, t.experience.ntt, t.experience.bitel, t.experience.tiendada, t.experience.pucp]
+  /** The 2021 PUCP apprenticeship stays on the site but is omitted here to keep the resume to one page. */
+  const jobs = [t.experience.bcp, t.experience.ntt, t.experience.bitel, t.experience.tiendada]
   jobs.forEach((job, i) => {
     if (i > 0) y += lead * 0.35
     room(lead * 4)
@@ -109,6 +106,17 @@ function render(doc: Doc, lang: Lang, lead: number) {
       y += lead
     })
   })
+
+  // ---- Education ----
+  heading(r.education)
+  const ed = t.education.pucp
+  row(ed.name, ed.period, 'bold')
+  row(ed.degree, profile.location[lang], 'italic')
+
+  // ---- Languages ----
+  heading(r.languages)
+  doc.setFont('times', 'normal').setFontSize(body)
+  paragraph(languages[lang])
 
   // ---- Certifications ----
   heading(r.certs)

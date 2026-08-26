@@ -31,7 +31,7 @@ export const translations = {
         location: 'Lima, Peru',
         period: '06/2024 – 01/2025',
         bullets: [
-          'Embedded at BCP — CIX Centro de Innovacxión, building fintech products from inception.',
+          'Embedded at BCP — CIX Centro de Innovacxión, building fintech products from inception; converted to a direct BCP hire in 01/2025.',
           'Engineered Lab SendSei, enabling cross-border remittances from Peru to the US, Spain, Colombia, and Chile.',
           'Designed microservices with hexagonal architecture, keeping business logic decoupled from infrastructure.',
           'Integrated the Kushki payment gateway and Remitee APIs to process international transfers end to end.',
@@ -98,9 +98,11 @@ export const translations = {
       es: 'Spanish',
     },
     resume: {
+      summary: 'SUMMARY',
       education: 'EDUCATION',
       experience: 'EXPERIENCE',
       skills: 'TECHNICAL SKILLS',
+      languages: 'LANGUAGES',
       certs: 'CERTIFICATIONS & AWARDS',
       tech: 'Technologies',
       relevant: 'Relevant coursework',
@@ -139,7 +141,7 @@ export const translations = {
         location: 'Lima, Perú',
         period: '06/2024 – 01/2025',
         bullets: [
-          'Asignado a BCP — CIX Centro de Innovacxión, construyendo productos fintech desde su concepción.',
+          'Asignado a BCP — CIX Centro de Innovacxión, construyendo productos fintech desde su concepción; contratado directamente por el BCP en 01/2025.',
           'Desarrollé Lab SendSei, habilitando remesas internacionales desde Perú hacia EE.UU., España, Colombia y Chile.',
           'Diseñé microservicios con arquitectura hexagonal, manteniendo la lógica de negocio desacoplada de la infraestructura.',
           'Integré la pasarela de pagos Kushki y las APIs de Remitee para procesar transferencias internacionales de extremo a extremo.',
@@ -206,9 +208,11 @@ export const translations = {
       es: 'Español',
     },
     resume: {
+      summary: 'PERFIL',
       education: 'EDUCACIÓN',
       experience: 'EXPERIENCIA',
       skills: 'HABILIDADES TÉCNICAS',
+      languages: 'IDIOMAS',
       certs: 'CERTIFICADOS Y LOGROS',
       tech: 'Tecnologías',
       relevant: 'Cursos relevantes',
@@ -221,8 +225,8 @@ export type Lang = keyof typeof translations
 export type Section = 'home' | 'experience' | 'education' | 'skills' | 'contact'
 
 export const skills: { category: { en: string; es: string }; items: string[] }[] = [
-  { category: { en: 'Languages', es: 'Lenguajes' }, items: ['Java', 'Python', 'Go', 'TypeScript', 'JavaScript'] },
-  { category: { en: 'Backend', es: 'Backend' }, items: ['Quarkus', 'Spring Boot', 'Spring WebFlux', 'Flask', 'Fastify', 'Echo', 'Struts'] },
+  { category: { en: 'Languages', es: 'Lenguajes' }, items: ['Java', 'Python', 'Go', 'TypeScript'] },
+  { category: { en: 'Backend', es: 'Backend' }, items: ['Quarkus', 'Spring Boot', 'Spring WebFlux', 'Flask', 'Fastify', 'Echo'] },
   { category: { en: 'Cloud & Infra', es: 'Cloud e Infra' }, items: ['Azure', 'AWS', 'Docker', 'Kubernetes', 'DAPR'] },
   { category: { en: 'Databases', es: 'Bases de Datos' }, items: ['PostgreSQL', 'Oracle', 'SQL Server', 'Redis'] },
   { category: { en: 'DevOps', es: 'DevOps' }, items: ['CI/CD', 'Jenkins', 'Bitbucket Pipelines', 'Nexus'] },
@@ -236,14 +240,27 @@ export const certificates: { en: string; es: string }[] = [
     en: 'Data Science and Machine Learning: Making Data-Driven Decisions — MIT IDSS',
     es: 'Data Science and Machine Learning: Making Data-Driven Decisions — MIT IDSS',
   },
-  { en: 'TOEFL iBT: 103', es: 'TOEFL iBT: 103' },
-  { en: 'Cambridge FCE (English B2)', es: 'Cambridge FCE (Inglés B2)' },
   { en: '2nd place — ScientOne Hackathon', es: '2do puesto — Hackathon ScientOne' },
 ]
+
+/** Surfaced on its own line: a gating criterion for remote and cross-border roles. */
+export const languages: { en: string; es: string } = {
+  en: 'Spanish (native)  •  English (C1 — TOEFL iBT 103)',
+  es: 'Español (nativo)  •  Inglés (C1 — TOEFL iBT 103)',
+}
+
+/** Opening positioning statement — the first thing a recruiter reads. */
+export const summary: { en: string; es: string } = {
+  en: 'Backend engineer with 4+ years building Java and Quarkus microservices and Azure cloud infrastructure for fintech, telecom, and e-commerce. Currently at BCP’s innovation center, shipping cross-border remittances, conversational AI, and automated reconciliation for Peru’s largest bank.',
+  es: 'Ingeniero backend con más de 4 años construyendo microservicios en Java y Quarkus e infraestructura cloud en Azure para fintech, telecomunicaciones y e-commerce. Actualmente en el centro de innovación del BCP, desarrollando remesas internacionales, IA conversacional y conciliación automatizada para el banco más grande del Perú.',
+}
 
 export const profile = {
   name: 'Andrés Kenichi Koga Nakay',
   location: { en: 'Lima, Peru', es: 'Lima, Perú' },
+  email: 'andreskoga@gmail.com',
+  /** Leave blank to omit from the resume header. */
+  linkedin: '',
   github: 'github.com/KKogaa',
 }
 

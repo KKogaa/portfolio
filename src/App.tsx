@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { translations, type Lang, type Section, skills, certificates, navItems } from './data'
+import { translations, type Lang, type Section, skills, certificates, languages, navItems } from './data'
 import { downloadCv } from './cv-pdf'
 
 function getBrowserLang(): Lang {
@@ -183,6 +183,11 @@ function App() {
             <p className="text-xs sm:text-sm text-blue-400">{t.education.pucp.degree}</p>
             <p className="text-xs sm:text-sm text-zinc-500 mb-2">{t.education.pucp.period}</p>
             <p className="text-zinc-400 text-xs sm:text-sm">{t.education.pucp.desc}</p>
+          </div>
+
+          <div className="border-l-2 border-blue-500/30 pl-4 sm:pl-6 mb-8 sm:mb-10">
+            <h3 className="text-base sm:text-xl font-semibold">{t.resume.languages}</h3>
+            <p className="text-zinc-400 text-xs sm:text-sm">{languages[lang]}</p>
           </div>
 
           <h3 className="text-lg sm:text-2xl font-semibold mb-3 sm:mb-4">{t.education.certsTitle}</h3>
