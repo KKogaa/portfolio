@@ -15,14 +15,14 @@ export const translations = {
         location: 'Lima, Peru',
         period: '01/2025 – Present',
         bullets: [
-          'Lab BCP Altoque — engineered the backend for a conversational AI assistant on WhatsApp, letting customers send money and access a credit card entirely through chat.',
+          'Lab BCP Altoque — engineered the backend for a conversational AI assistant on WhatsApp built on Azure AI Foundry, letting customers send money and access a credit card entirely through chat.',
           'Lab Tesora — built an automated reconciliation platform matching bank movements pulled via Open Banking APIs against electronic receipts from SUNAT SIRE, replacing a manual back-office process.',
           'Lab SendSei — developed backend services for a cross-border money transfer platform operating in multiple countries.',
-          'Architected scalable microservices in Quarkus (Java) and Python, using DAPR for service-to-service communication.',
+          'Architected scalable microservices in Quarkus (Java) and Python.',
           'Deployed and operated cloud infrastructure on Azure: Container Apps, Functions, Redis, Service Bus, Key Vault, and B2C.',
           'Drove technical decisions in cross-functional Agile teams through architecture reviews and sprint planning.',
         ],
-        tech: ['Java', 'Quarkus', 'Python', 'Azure', 'DAPR', 'Redis', 'Azure Service Bus', 'Open Banking', 'SUNAT SIRE'],
+        tech: ['Java', 'Quarkus', 'Python', 'Azure', 'Azure AI Foundry', 'GitHub Copilot', 'Redis', 'Azure Service Bus', 'Open Banking', 'SUNAT SIRE', 'DAPR'],
       },
       ntt: {
         company: 'NTT DATA Europe & Latam',
@@ -30,7 +30,7 @@ export const translations = {
         location: 'Lima, Peru',
         period: '06/2024 – 01/2025',
         bullets: [
-          'Embedded at BCP — CIX Centro de Innovacxión, building fintech products from inception; converted to a direct BCP hire in 01/2025.',
+          'Embedded at BCP — CIX Centro de Innovacxión, building fintech products from inception.',
           'Engineered Lab SendSei, enabling cross-border remittances from Peru to the US, Spain, Colombia, and Chile.',
           'Designed microservices with hexagonal architecture, keeping business logic decoupled from infrastructure.',
           'Integrated the Kushki payment gateway and Remitee APIs to process international transfers end to end.',
@@ -119,14 +119,14 @@ export const translations = {
         location: 'Lima, Perú',
         period: '01/2025 – Presente',
         bullets: [
-          'Lab BCP Altoque — desarrollé el backend de un asistente de IA conversacional en WhatsApp, permitiendo a los clientes enviar dinero y acceder a una tarjeta de crédito íntegramente desde el chat.',
+          'Lab BCP Altoque — desarrollé el backend de un asistente de IA conversacional en WhatsApp sobre Azure AI Foundry, permitiendo a los clientes enviar dinero y acceder a una tarjeta de crédito íntegramente desde el chat.',
           'Lab Tesora — construí una plataforma de conciliación automatizada que cruza movimientos bancarios obtenidos vía APIs de Open Banking contra comprobantes electrónicos de SUNAT SIRE, reemplazando un proceso manual de back-office.',
           'Lab SendSei — desarrollé servicios backend para una plataforma de transferencias internacionales de dinero operando en múltiples países.',
-          'Diseñé microservicios escalables con Quarkus (Java) y Python, utilizando DAPR para la comunicación entre servicios.',
+          'Diseñé microservicios escalables con Quarkus (Java) y Python.',
           'Desplegué y operé infraestructura cloud en Azure: Container Apps, Functions, Redis, Service Bus, Key Vault y B2C.',
           'Impulsé decisiones técnicas en equipos Agile multifuncionales mediante revisiones de arquitectura y planificación de sprints.',
         ],
-        tech: ['Java', 'Quarkus', 'Python', 'Azure', 'DAPR', 'Redis', 'Azure Service Bus', 'Open Banking', 'SUNAT SIRE'],
+        tech: ['Java', 'Quarkus', 'Python', 'Azure', 'Azure AI Foundry', 'GitHub Copilot', 'Redis', 'Azure Service Bus', 'Open Banking', 'SUNAT SIRE', 'DAPR'],
       },
       ntt: {
         company: 'NTT DATA Europe & Latam',
@@ -134,7 +134,7 @@ export const translations = {
         location: 'Lima, Perú',
         period: '06/2024 – 01/2025',
         bullets: [
-          'Asignado a BCP — CIX Centro de Innovacxión, construyendo productos fintech desde su concepción; contratado directamente por el BCP en 01/2025.',
+          'Asignado a BCP — CIX Centro de Innovacxión, construyendo productos fintech desde su concepción.',
           'Desarrollé Lab SendSei, habilitando remesas internacionales desde Perú hacia EE.UU., España, Colombia y Chile.',
           'Diseñé microservicios con arquitectura hexagonal, manteniendo la lógica de negocio desacoplada de la infraestructura.',
           'Integré la pasarela de pagos Kushki y las APIs de Remitee para procesar transferencias internacionales de extremo a extremo.',
@@ -215,7 +215,7 @@ export type Section = 'home' | 'experience' | 'education' | 'skills' | 'contact'
 export const skills: { category: { en: string; es: string }; items: string[] }[] = [
   { category: { en: 'Languages', es: 'Lenguajes' }, items: ['Java', 'Python', 'Go', 'TypeScript'] },
   { category: { en: 'Backend', es: 'Backend' }, items: ['Quarkus', 'Spring Boot', 'Spring WebFlux', 'Flask', 'Fastify', 'Echo'] },
-  { category: { en: 'Cloud & Infra', es: 'Cloud e Infra' }, items: ['Azure', 'AWS', 'Docker', 'Kubernetes', 'DAPR'] },
+  { category: { en: 'Cloud & Infra', es: 'Cloud e Infra' }, items: ['Azure', 'Azure AI Foundry', 'AWS', 'Docker', 'Kubernetes', 'DAPR'] },
   { category: { en: 'Databases', es: 'Bases de Datos' }, items: ['PostgreSQL', 'Oracle', 'SQL Server', 'Redis'] },
   { category: { en: 'DevOps', es: 'DevOps' }, items: ['CI/CD', 'Jenkins', 'Bitbucket Pipelines', 'Nexus'] },
   { category: { en: 'Frontend', es: 'Frontend' }, items: ['React', 'Tailwind CSS'] },
@@ -258,4 +258,5 @@ export const profile = {
   github: 'github.com/KKogaa',
 }
 
-export const navItems: Section[] = ['home', 'experience', 'education', 'skills', 'contact']
+/** Order mirrors the page's scroll order. */
+export const navItems: Section[] = ['home', 'experience', 'skills', 'education', 'contact']

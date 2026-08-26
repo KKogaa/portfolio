@@ -1,5 +1,15 @@
-import { useState, useEffect } from 'react'
-import { translations, type Lang, type Section, skills, certificates, languages, profile, navItems } from './data'
+import { useState, useEffect, useRef, type ReactNode } from 'react'
+import {
+  translations,
+  type Lang,
+  type Section,
+  skills,
+  certificates,
+  languages,
+  summary,
+  profile,
+  navItems,
+} from './data'
 import { downloadCv } from './cv-pdf'
 
 function getBrowserLang(): Lang {
@@ -7,22 +17,85 @@ function getBrowserLang(): Lang {
   return lang === 'es' ? 'es' : 'en'
 }
 
+/** Fades a block in the first time it scrolls into view, then stops observing. */
+function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [shown, setShown] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      className={`reveal ${shown ? 'is-visible' : ''} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
+/** Highlights the nav item whose section occupies the middle band of the viewport. */
+function useScrollSpy(ids: readonly Section[]): Section {
+  const [active, setActive] = useState<Section>(ids[0])
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.find((e) => e.isIntersecting)
+        if (hit) setActive(hit.target.id as Section)
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [ids])
+
+  return active
+}
+
+function SectionTitle({ children }: { children: ReactNode }) {
+  return (
+    <Reveal>
+      <h2 className="headline text-[clamp(2rem,5vw,3.25rem)] mb-12 sm:mb-16">{children}</h2>
+    </Reveal>
+  )
+}
+
 function App() {
-  const [active, setActive] = useState<Section>('home')
   const [lang, setLang] = useState<Lang>(getBrowserLang)
   const [menuOpen, setMenuOpen] = useState(false)
   const [downloading, setDownloading] = useState<Lang | null>(null)
+  const active = useScrollSpy(navItems)
 
   useEffect(() => {
     document.documentElement.lang = lang
   }, [lang])
 
-  const toggleLang = () => setLang((l) => (l === 'en' ? 'es' : 'en'))
-  const navigate = (s: Section) => {
-    setActive(s)
-    setMenuOpen(false)
-  }
   const t = translations[lang]
+  const jobs = [t.experience.bcp, t.experience.ntt, t.experience.bitel, t.experience.tiendada, t.experience.pucp]
+
+  const go = (s: Section) => {
+    setMenuOpen(false)
+    document.getElementById(s)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   const handleDownload = async (target: Lang) => {
     setDownloading(target)
@@ -33,280 +106,245 @@ function App() {
     }
   }
 
-  const jobs = [t.experience.bcp, t.experience.ntt, t.experience.bitel, t.experience.tiendada, t.experience.pucp]
-
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full flex justify-between items-center px-4 sm:px-8 py-3 sm:py-4 bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/10 z-50">
-        <div className="text-xl sm:text-2xl font-bold bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
-          AK
-        </div>
-
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
-          {navItems.map((s) => (
-            <button
-              key={s}
-              onClick={() => navigate(s)}
-              className={`px-3 sm:px-4 py-2 rounded-lg text-sm transition-all ${
-                active === s
-                  ? 'text-white bg-white/10'
-                  : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              {t.nav[s]}
-            </button>
-          ))}
-          <button
-            onClick={toggleLang}
-            className="ml-2 px-3 py-1.5 rounded-lg text-sm font-medium border border-white/10 hover:bg-white/5 transition text-zinc-300"
-          >
-            {lang === 'en' ? 'ES' : 'EN'}
+    <div className="min-h-screen bg-black text-ink">
+      {/* ---- Nav: translucent, hairline-bottomed, collapses to a sheet on mobile ---- */}
+      <nav className="fixed top-0 inset-x-0 z-50 h-12 bg-black/70 backdrop-blur-2xl border-b border-hairline">
+        <div className="mx-auto max-w-5xl h-full px-5 flex items-center justify-between">
+          <button onClick={() => go('home')} className="text-sm font-semibold tracking-tight hover:text-white transition">
+            Andrés Koga
           </button>
-        </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-2 text-zinc-400 hover:text-white"
-          aria-label="Menu"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {menuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </nav>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="fixed top-[56px] left-0 right-0 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10 z-40 md:hidden">
-          <div className="flex flex-col p-4 gap-1">
+          <div className="hidden md:flex items-center gap-7">
             {navItems.map((s) => (
               <button
                 key={s}
-                onClick={() => navigate(s)}
-                className={`px-4 py-3 rounded-lg text-left transition-all ${
-                  active === s
-                    ? 'text-white bg-white/10'
-                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                }`}
+                onClick={() => go(s)}
+                className={`text-xs transition-colors ${active === s ? 'text-ink' : 'text-muted hover:text-ink'}`}
               >
                 {t.nav[s]}
               </button>
             ))}
             <button
-              onClick={toggleLang}
-              className="mt-2 px-4 py-3 rounded-lg text-sm font-medium border border-white/10 text-zinc-300"
+              onClick={() => setLang((l) => (l === 'en' ? 'es' : 'en'))}
+              className="text-xs text-muted hover:text-ink transition-colors border border-hairline rounded-full px-2.5 py-1"
             >
-              {lang === 'en' ? '🇪🇸 Español' : '🇬🇧 English'}
+              {lang === 'en' ? 'ES' : 'EN'}
             </button>
           </div>
-        </div>
-      )}
 
-      {/* Home */}
-      {active === 'home' && (
-        <section className="min-h-screen flex items-center justify-center text-center px-4 sm:px-6">
-          <div>
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
-              Andrés Kenichi Koga Nakay
-            </h1>
-            <p className="text-lg sm:text-xl text-blue-500 mb-2">{t.hero.subtitle}</p>
-            <p className="text-sm sm:text-base text-zinc-400 mb-6 sm:mb-8 max-w-xl mx-auto">{t.hero.tagline}</p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-muted hover:text-ink p-1 -mr-1"
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                d={menuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 7h16M4 12h16M4 17h16'}
+              />
+            </svg>
+          </button>
+        </div>
+
+        {menuOpen && (
+          <div className="md:hidden bg-black/95 backdrop-blur-2xl border-b border-hairline">
+            <div className="flex flex-col px-5 py-3">
+              {navItems.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => go(s)}
+                  className={`py-3 text-left text-sm border-b border-hairline last:border-0 ${
+                    active === s ? 'text-ink' : 'text-muted'
+                  }`}
+                >
+                  {t.nav[s]}
+                </button>
+              ))}
               <button
-                onClick={() => setActive('experience')}
-                className="w-full sm:w-auto px-6 py-3 rounded-lg bg-blue-500 hover:bg-blue-600 transition font-medium"
+                onClick={() => setLang((l) => (l === 'en' ? 'es' : 'en'))}
+                className="py-3 text-left text-sm text-accent"
+              >
+                {lang === 'en' ? 'Español' : 'English'}
+              </button>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* ---- Hero ---- */}
+      <section id="home" className="min-h-screen flex items-center justify-center px-5">
+        {/* Rendered eagerly, not gated on the observer: this is the LCP element. */}
+        <div className="max-w-3xl text-center">
+          <p className="text-accent text-sm sm:text-base font-medium mb-5">{t.hero.subtitle}</p>
+          <h1 className="display text-[clamp(2.75rem,9vw,5.5rem)] mb-7">Andrés Kenichi Koga Nakay</h1>
+          <p className="text-muted text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-10">{summary[lang]}</p>
+          <div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => go('experience')}
+                className="px-7 py-3 rounded-full bg-accent text-white text-sm font-medium hover:opacity-85 transition"
               >
                 {t.hero.primaryBtn}
               </button>
               <button
-                onClick={() => setActive('contact')}
-                className="w-full sm:w-auto px-6 py-3 rounded-lg border border-white/10 hover:bg-white/5 transition font-medium"
+                onClick={() => go('contact')}
+                className="px-7 py-3 rounded-full border border-hairline text-sm font-medium hover:bg-surface transition"
               >
                 {t.hero.secondaryBtn}
               </button>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Experience */}
-      {active === 'experience' && (
-        <section className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-8">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-10 bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            {t.experience.title}
-          </h2>
-          <div className="space-y-6 sm:space-y-8">
+      {/* ---- Experience ---- */}
+      <section id="experience" className="py-28 sm:py-40 px-5">
+        <div className="mx-auto max-w-3xl">
+          <SectionTitle>{t.experience.title}</SectionTitle>
+          <div className="space-y-16 sm:space-y-24">
             {jobs.map((job) => (
-              <div key={job.company} className="border-l-2 border-blue-500/30 pl-4 sm:pl-6">
-                <h3 className="text-lg sm:text-xl font-semibold">{job.company}</h3>
-                <p className="text-xs sm:text-sm text-blue-400">{job.role}</p>
-                <p className="text-xs sm:text-sm text-zinc-500 mb-3 sm:mb-4">{job.period}</p>
-                <ul className="space-y-2">
-                  {job.bullets.map((b, i) => (
-                    <li key={i} className="text-zinc-400 text-xs sm:text-sm flex gap-2">
-                      <span className="text-blue-500 mt-0.5 shrink-0">›</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-                {'tech' in job && job.tech && (
-                  <div className="flex flex-wrap gap-1.5 mt-3">
+              <Reveal key={job.company}>
+                <article>
+                  <p className="text-muted text-xs mb-3 tabular-nums">{job.period}</p>
+                  <h3 className="headline text-xl sm:text-2xl mb-1">{job.company}</h3>
+                  <p className="text-accent text-sm mb-6">
+                    {job.role} · {job.location}
+                  </p>
+                  <ul className="space-y-3">
+                    {job.bullets.map((b, i) => (
+                      <li key={i} className="text-muted text-[15px] leading-relaxed pl-5 relative">
+                        <span className="absolute left-0 top-[0.6em] w-1.5 h-px bg-muted" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-2 mt-6">
                     {job.tech.map((tech: string) => (
-                      <span key={tech} className="px-2 py-0.5 rounded text-xs text-blue-400 bg-blue-500/10 border border-blue-500/20">
+                      <span
+                        key={tech}
+                        className="px-3 py-1 rounded-full text-xs text-muted bg-surface border border-hairline"
+                      >
                         {tech}
                       </span>
                     ))}
                   </div>
-                )}
-              </div>
+                </article>
+              </Reveal>
             ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Education */}
-      {active === 'education' && (
-        <section className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-8">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-10 bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            {t.education.title}
-          </h2>
-
-          <div className="border-l-2 border-blue-500/30 pl-4 sm:pl-6 mb-8 sm:mb-10">
-            <h3 className="text-base sm:text-xl font-semibold">{t.education.pucp.name}</h3>
-            <p className="text-xs sm:text-sm text-blue-400">{t.education.pucp.degree}</p>
-            <p className="text-xs sm:text-sm text-zinc-500 mb-2">{t.education.pucp.period}</p>
-            <p className="text-zinc-400 text-xs sm:text-sm">{t.education.pucp.desc}</p>
-          </div>
-
-          <div className="border-l-2 border-blue-500/30 pl-4 sm:pl-6 mb-8 sm:mb-10">
-            <h3 className="text-base sm:text-xl font-semibold">{t.resume.languages}</h3>
-            <p className="text-zinc-400 text-xs sm:text-sm">{languages[lang]}</p>
-          </div>
-
-          <h3 className="text-lg sm:text-2xl font-semibold mb-3 sm:mb-4">{t.education.certsTitle}</h3>
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            {certificates.map((c) => (
-              <span
-                key={c.en}
-                className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm text-zinc-300 bg-white/5 border border-white/10"
-              >
-                {c[lang]}
-              </span>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Skills */}
-      {active === 'skills' && (
-        <section className="min-h-screen max-w-4xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-8">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            {t.skills.title}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {skills.map((group) => (
-              <div
-                key={group.category.en}
-                className="p-4 sm:p-6 rounded-xl border border-white/10 bg-white/[0.02]"
-              >
-                <h3 className="text-blue-500 font-semibold mb-2 sm:mb-3 text-sm sm:text-base">{group.category[lang]}</h3>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-md text-xs sm:text-sm text-zinc-400 bg-white/5 border border-white/10"
-                    >
-                      {item}
-                    </span>
-                  ))}
+      {/* ---- Skills ---- */}
+      <section id="skills" className="py-28 sm:py-40 px-5 border-t border-hairline">
+        <div className="mx-auto max-w-3xl">
+          <SectionTitle>{t.skills.title}</SectionTitle>
+          <div className="grid sm:grid-cols-2 gap-px bg-hairline rounded-2xl overflow-hidden border border-hairline">
+            {skills.map((group, i) => (
+              <Reveal key={group.category.en} delay={i * 60} className="bg-black">
+                <div className="p-6 h-full">
+                  <h3 className="text-sm font-semibold mb-3">{group.category[lang]}</h3>
+                  <p className="text-muted text-[15px] leading-relaxed">{group.items.join(', ')}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Contact */}
-      {active === 'contact' && (
-        <section className="min-h-screen max-w-3xl mx-auto px-4 sm:px-6 pt-20 sm:pt-28 pb-8">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            {t.contact.title}
-          </h2>
+      {/* ---- Education, languages, certifications ---- */}
+      <section id="education" className="py-28 sm:py-40 px-5 border-t border-hairline">
+        <div className="mx-auto max-w-3xl">
+          <SectionTitle>{t.education.title}</SectionTitle>
 
-          <div className="mb-6 sm:mb-8 p-5 sm:p-6 rounded-xl border border-white/10 bg-white/[0.02]">
-            <div className="flex items-baseline justify-between gap-3 mb-3 sm:mb-4">
-              <h3 className="font-medium text-sm sm:text-base">{t.cv.title}</h3>
-              <small className="text-zinc-500 text-xs">{t.cv.note}</small>
+          <Reveal>
+            <div className="mb-14">
+              <p className="text-muted text-xs mb-3 tabular-nums">{t.education.pucp.period}</p>
+              <h3 className="headline text-xl sm:text-2xl mb-1">{t.education.pucp.name}</h3>
+              <p className="text-accent text-sm mb-4">{t.education.pucp.degree}</p>
+              <p className="text-muted text-[15px] leading-relaxed">{t.education.pucp.desc}</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              {(['en', 'es'] as const).map((target) => (
-                <button
-                  key={target}
-                  onClick={() => handleDownload(target)}
-                  disabled={downloading !== null}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-white/10 bg-white/5 hover:border-blue-500/50 hover:bg-white/10 transition text-sm disabled:opacity-50 disabled:cursor-wait"
-                >
-                  <span aria-hidden>{downloading === target ? '⏳' : '📄'}</span>
-                  <span>{t.cv[target]}</span>
-                </button>
+          </Reveal>
+
+          <Reveal>
+            <div className="mb-14">
+              <h3 className="text-sm font-semibold mb-3">{t.resume.languages}</h3>
+              <p className="text-muted text-[15px]">{languages[lang]}</p>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <h3 className="text-sm font-semibold mb-4">{t.education.certsTitle}</h3>
+            <ul className="space-y-3">
+              {certificates.map((c) => (
+                <li key={c.en} className="text-muted text-[15px] leading-relaxed pl-5 relative">
+                  <span className="absolute left-0 top-[0.6em] w-1.5 h-px bg-muted" />
+                  {c[lang]}
+                </li>
               ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---- Contact + CV ---- */}
+      <section id="contact" className="py-28 sm:py-40 px-5 border-t border-hairline">
+        <div className="mx-auto max-w-3xl">
+          <SectionTitle>{t.contact.title}</SectionTitle>
+
+          <Reveal>
+            <div className="rounded-2xl border border-hairline bg-surface p-6 sm:p-8 mb-4">
+              <h3 className="text-base font-semibold mb-1">{t.cv.title}</h3>
+              <p className="text-muted text-sm mb-6">{t.cv.note}</p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                {(['en', 'es'] as const).map((target) => (
+                  <button
+                    key={target}
+                    onClick={() => handleDownload(target)}
+                    disabled={downloading !== null}
+                    className="flex-1 px-5 py-3 rounded-full border border-hairline text-sm hover:bg-surface transition disabled:opacity-40 disabled:cursor-wait"
+                  >
+                    {downloading === target ? '···' : t.cv[target]}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <a
-              href="https://t.me/Kkogaa"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 p-6 sm:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-blue-500/50 transition"
-            >
-              <span className="text-3xl sm:text-4xl">💬</span>
-              <span className="font-medium text-sm sm:text-base">Telegram</span>
-              <small className="text-zinc-500 text-xs sm:text-sm">@Kkogaa</small>
-            </a>
-            <a
-              href="https://github.com/KKogaa"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 p-6 sm:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-blue-500/50 transition"
-            >
-              <span className="text-3xl sm:text-4xl">🐙</span>
-              <span className="font-medium text-sm sm:text-base">GitHub</span>
-              <small className="text-zinc-500 text-xs sm:text-sm">KKogaa</small>
-            </a>
-            <a
-              href={`https://${profile.linkedin}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-2 p-6 sm:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-blue-500/50 transition"
-            >
-              <span className="text-3xl sm:text-4xl">💼</span>
-              <span className="font-medium text-sm sm:text-base">LinkedIn</span>
-              <small className="text-zinc-500 text-xs sm:text-sm">Andrés Koga</small>
-            </a>
-            <a
-              href={`mailto:${profile.email}`}
-              className="flex flex-col items-center gap-2 p-6 sm:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-blue-500/50 transition"
-            >
-              <span className="text-3xl sm:text-4xl">✉️</span>
-              <span className="font-medium text-sm sm:text-base">Email</span>
-              <small className="text-zinc-500 text-xs sm:text-sm">{profile.email}</small>
-            </a>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { href: `mailto:${profile.email}`, label: 'Email', value: profile.email },
+              { href: `https://${profile.linkedin}`, label: 'LinkedIn', value: 'Andrés Koga' },
+              { href: `https://${profile.github}`, label: 'GitHub', value: 'KKogaa' },
+              { href: 'https://t.me/Kkogaa', label: 'Telegram', value: '@Kkogaa' },
+            ].map((link, i) => (
+              <Reveal key={link.label} delay={i * 60}>
+                <a
+                  href={link.href}
+                  target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-2xl border border-hairline bg-surface px-6 py-5 hover:border-white/25 transition"
+                >
+                  <span>
+                    <span className="block text-sm font-medium">{link.label}</span>
+                    <span className="block text-muted text-sm truncate">{link.value}</span>
+                  </span>
+                  <span className="text-muted group-hover:text-accent transition shrink-0 ml-3" aria-hidden>
+                    ↗
+                  </span>
+                </a>
+              </Reveal>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* Footer */}
-      <footer className="text-center py-6 sm:py-8 text-zinc-600 text-xs sm:text-sm border-t border-white/5 px-4">
-        <p>© {new Date().getFullYear()} Andrés Koga. {t.footer}</p>
-        <p className="mt-1">v0.3.1</p>
+      <footer className="border-t border-hairline py-10 px-5 text-center">
+        <p className="text-muted text-xs">
+          © {new Date().getFullYear()} Andrés Koga. {t.footer}
+        </p>
       </footer>
     </div>
   )
