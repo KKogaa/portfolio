@@ -318,7 +318,6 @@ function App() {
               { href: `mailto:${profile.email}`, label: 'Email', value: profile.email },
               { href: `https://${profile.linkedin}`, label: 'LinkedIn', value: 'Andrés Koga' },
               { href: `https://${profile.github}`, label: 'GitHub', value: 'KKogaa' },
-              { href: 'https://t.me/Kkogaa', label: 'Telegram', value: '@Kkogaa' },
             ].map((link, i) => (
               <Reveal key={link.label} delay={i * 60}>
                 <a
