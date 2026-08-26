@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { translations, type Lang, type Section, skills, certificates, languages, navItems } from './data'
+import { translations, type Lang, type Section, skills, certificates, languages, profile, navItems } from './data'
 import { downloadCv } from './cv-pdf'
 
 function getBrowserLang(): Lang {
@@ -280,6 +280,24 @@ function App() {
               <span className="text-3xl sm:text-4xl">🐙</span>
               <span className="font-medium text-sm sm:text-base">GitHub</span>
               <small className="text-zinc-500 text-xs sm:text-sm">KKogaa</small>
+            </a>
+            <a
+              href={`https://${profile.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-2 p-6 sm:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-blue-500/50 transition"
+            >
+              <span className="text-3xl sm:text-4xl">💼</span>
+              <span className="font-medium text-sm sm:text-base">LinkedIn</span>
+              <small className="text-zinc-500 text-xs sm:text-sm">Andrés Koga</small>
+            </a>
+            <a
+              href={`mailto:${profile.email}`}
+              className="flex flex-col items-center gap-2 p-6 sm:p-8 rounded-xl border border-white/10 bg-white/[0.02] hover:border-blue-500/50 transition"
+            >
+              <span className="text-3xl sm:text-4xl">✉️</span>
+              <span className="font-medium text-sm sm:text-base">Email</span>
+              <small className="text-zinc-500 text-xs sm:text-sm">{profile.email}</small>
             </a>
           </div>
         </section>

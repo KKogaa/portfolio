@@ -1,4 +1,4 @@
-import { translations, skills, certificates, languages, summary, profile, type Lang } from './data'
+import { translations, skills, certificates, languages, summary, headline, profile, type Lang } from './data'
 
 /** A4, 0.75in margins — Harvard resume conventions. */
 const PAGE_W = 595.28
@@ -64,7 +64,10 @@ function render(doc: Doc, lang: Lang, lead: number) {
   // ---- Header ----
   doc.setFont('times', 'bold').setFontSize(19)
   doc.text(profile.name, PAGE_W / 2, y, { align: 'center' })
-  y += 15
+  y += 13.5
+  doc.setFont('times', 'bold').setFontSize(body + 1.5)
+  doc.text(headline[lang], PAGE_W / 2, y, { align: 'center' })
+  y += 11
   doc.setFont('times', 'normal').setFontSize(body)
   const contact = [profile.location[lang], profile.email, profile.linkedin, profile.github].filter(Boolean)
   doc.text(contact.join('  •  '), PAGE_W / 2, y, { align: 'center' })
@@ -139,5 +142,5 @@ export async function buildCv(lang: Lang) {
 
 export async function downloadCv(lang: Lang) {
   const doc = await buildCv(lang)
-  doc.save(`Andres_Koga_CV_${lang.toUpperCase()}.pdf`)
+  doc.save(`Andres_Koga_Backend_Engineer_CV_${lang.toUpperCase()}.pdf`)
 }

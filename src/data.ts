@@ -249,18 +249,24 @@ export const languages: { en: string; es: string } = {
   es: 'Español (nativo)  •  Inglés (C1 — TOEFL iBT 103)',
 }
 
-/** Opening positioning statement — the first thing a recruiter reads. */
+/** Sits under the name: gives a recruiter the title, stack, and seniority band at a glance. */
+export const headline: { en: string; es: string } = {
+  en: 'Backend Software Engineer  ·  Java · Quarkus · Azure  ·  4+ years',
+  es: 'Ingeniero de Software Backend  ·  Java · Quarkus · Azure  ·  4+ años',
+}
+
+/** Carries only what the headline cannot: the concrete products behind the title. */
 export const summary: { en: string; es: string } = {
-  en: 'Backend engineer with 4+ years building Java and Quarkus microservices and Azure cloud infrastructure for fintech, telecom, and e-commerce. Currently at BCP’s innovation center, shipping cross-border remittances, conversational AI, and automated reconciliation for Peru’s largest bank.',
-  es: 'Ingeniero backend con más de 4 años construyendo microservicios en Java y Quarkus e infraestructura cloud en Azure para fintech, telecomunicaciones y e-commerce. Actualmente en el centro de innovación del BCP, desarrollando remesas internacionales, IA conversacional y conciliación automatizada para el banco más grande del Perú.',
+  en: 'Currently at BCP’s innovation center building fintech products — cross-border remittances across four countries, a WhatsApp conversational AI assistant, and automated reconciliation for Peru’s largest bank.',
+  es: 'Actualmente en el centro de innovación del BCP construyendo productos fintech — remesas internacionales en cuatro países, un asistente de IA conversacional en WhatsApp y conciliación automatizada para el banco más grande del Perú.',
 }
 
 export const profile = {
   name: 'Andrés Kenichi Koga Nakay',
   location: { en: 'Lima, Peru', es: 'Lima, Perú' },
   email: 'andreskoga@gmail.com',
-  /** Leave blank to omit from the resume header. */
-  linkedin: '',
+  /** Display form, without the scheme. Leave blank to omit from the resume header. */
+  linkedin: 'linkedin.com/in/andres-kenichi-koga-nakay-14b11b219',
   github: 'github.com/KKogaa',
 }
 
